@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>ArmazeneJá</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #f2f2f2;
+    }
+
+    header {
+      background-color: #4CAF50;
+      padding: 20px;
+      text-align: center;
+      color: white;
+      position: relative;
+    }
+
+    #louie {
+      width: 80px;
+      position: absolute;
+      bottom: -20px;
+      left: 50%;
+      transform: translateX(-50%);
+    }
+
+    #falaLouie {
+      margin-top: 10px;
+      font-style: italic;
+      color: #333;
+      position: absolute;
+      bottom: -80px;
+      left: 50%;
+      transform: translateX(-50%) translateX(60px);
+      white-space: nowrap;
+      background: #ffffffcc;
+      padding: 5px 10px;
+      border-radius: 10px;
+    }
+
+    nav {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      background-color: #333;
+      margin-top: 60px;
+    }
+
+    nav button {
+      padding: 12px 24px;
+      background: none;
+      color: white;
+      border: none;
+      cursor: pointer;
+      font-size: 16px;
+    }
+
+    nav button:hover {
+      background-color: #575757;
+    }
+
+    .content {
+      padding: 30px;
+      max-width: 1000px;
+      margin: auto;
+      background-color: white;
+      border-radius: 10px;
+      margin-top: 20px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+
+    .hidden {
+      display: none;
+    }
+
+    input, select {
+      padding: 8px;
+      margin: 5px 0;
+      width: 100%;
+      box-sizing: border-box;
+    }
+
+    .form-section {
+      margin-bottom: 20px;
+    }
+
+    h2 {
+      color: #4CAF50;
+    }
+
+    .cubagem-result {
+      font-weight: bold;
+      margin-top: 10px;
+      color: #333;
+    }
+
+    .espaco-section {
+      margin-top: 20px;
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>ArmazeneJá</h1>
+    <p>Sua armazenagem sob medida, suas decisões personalizadas!</p>
+    <img id="louie" src="imagem/luy.png" alt="Louie, o mascote" />
+    <p id="falaLouie">Olá! Sou o Louie. Vamos armazenar?</p>
+  </header>
+
+  <nav>
+    <button onclick="mostrarAba('inicio')">Início</button>
+    <button onclick="mostrarAba('buscar')">Buscar Espaço</button>
+    <button onclick="mostrarAba('login')">Login</button>
+    <button onclick="mostrarAba('cadastro')">Cadastro</button>
+    <button onclick="mostrarAba('parceiros')">Parceiros</button>
+    <button onclick="mostrarAba('pagamento')">Pagamento</button>
+  </nav>
+
+  <div class="content">
+    <div id="inicio">
+      <h2>Bem-vindo ao ArmazeneJá</h2>
+      <p>Nosso site conecta microempreendedores a empresas com espaços disponíveis dentro de armazéns. Aqui você aluga o espaço que precisa, pelo tempo que quiser e com o valor justo baseado na cubagem utilizada.</p>
+      <p>⭐ Encontre o armazém ideal com poucos cliques!</p>
+    </div>
+
+    <div id="buscar" class="hidden">
+      <h2>Buscar Espaços</h2>
+      <p>Digite sua cidade ou CEP e veja os espaços disponíveis em armazéns próximos:</p>
+      <input type="text" placeholder="Digite sua localização">
+      <button onclick="mostrarEspaco()">Selecionar Espaço</button>
+
+      <div id="espacoSelecionado" class="espaco-section hidden">
+        <h3>Espaço Exemplo</h3>
+        <p>Localização: São Paulo - SP</p>
+        <p>Valor do m³: R$ 15,00</p>
+
+        <h4>Calculadora de Cubagem</h4>
+        <label>Altura (m):</label>
+        <input type="number" id="altura" step="0.01">
+        <label>Largura (m):</label>
+        <input type="number" id="largura" step="0.01">
+        <label>Profundidade (m):</label>
+        <input type="number" id="profundidade" step="0.01">
+        <button onclick="calcularCubagem()">Calcular</button>
+        <div id="resultado" class="cubagem-result"></div>
+      </div>
+    </div>
+
+    <div id="login" class="hidden">
+      <h2>Login</h2>
+      <p>Selecione seu perfil e acesse sua conta:</p>
+      <select>
+        <option>Sou Microempreendedor</option>
+        <option>Sou Empresa</option>
+      </select>
+      <input type="text" placeholder="E-mail" />
+      <input type="password" placeholder="Senha" />
+      <button>Entrar</button>
+    </div>
+
+    <div id="cadastro" class="hidden">
+      <h2>Cadastro</h2>
+      <p>Crie sua conta para começar a usar o ArmazeneJá:</p>
+      <input type="text" placeholder="Nome completo" />
+      <input type="email" placeholder="E-mail" />
+      <input type="password" placeholder="Senha" />
+      <select>
+        <option>Microempreendedor</option>
+        <option>Empresa com armazém</option>
+      </select>
+      <button>Finalizar Cadastro</button>
+    </div>
+
+    <div id="parceiros" class="hidden">
+      <h2>Parceiros</h2>
+      <p>Precisa transportar seus produtos? Conheça nossos parceiros de frete:</p>
+      <ul>
+        <li>Transportadora Rápido Sul</li>
+        <li>LogExpress 999-999</li>
+        <li>Frete Fácil 6666-666</li>
+        <li>Entregas Ninja 7777-7777</li>
+      </ul>
+    </div>
+
+    <div id="pagamento" class="hidden">
+      <h2>Pagamento</h2>
+      <p>Escolha seu plano e finalize sua reserva:</p>
+      <select>
+        <option>Diária</option>
+        <option>Semanal</option>
+        <option>Mensal</option>
+      </select>
+      <p>Métodos de pagamento:</p>
+      <ul>
+        <li>Pix</li>
+        <li>Cartão de crédito</li>
+        <li>Boleto bancário</li>
+      </ul>
+      <button>Efetuar Pagamento</button>
+    </div>
+  </div>
+
+  <script>
+    const frasesLouie = {
+      inicio: "Olá! Sou o Louie. Vamos armazenar?",
+      buscar: "Buscando o espaço ideal? Deixa comigo!",
+      login: "Acesso garantido com segurança, bora entrar!",
+      cadastro: "Novo por aqui? Bora se cadastrar!",
+      parceiros: "Esses são nossos parceiros de entrega!",
+      pagamento: "Escolha o plano e feche seu pedido!"
+    };
+
+    function mostrarAba(aba) {
+      const abas = document.querySelectorAll('.content > div');
+      abas.forEach(div => div.classList.add('hidden'));
+      document.getElementById(aba).classList.remove('hidden');
+      document.getElementById("falaLouie").innerText = frasesLouie[aba] || "Pronto pra armazenar!";
+    }
+
+    function mostrarEspaco() {
+      document.getElementById("espacoSelecionado").classList.remove("hidden");
+    }
+
+    function calcularCubagem() {
+      const altura = parseFloat(document.getElementById("altura").value);
+      const largura = parseFloat(document.getElementById("largura").value);
+      const profundidade = parseFloat(document.getElementById("profundidade").value);
+      const valor = 15;
+
+      if (isNaN(altura) || isNaN(largura) || isNaN(profundidade)) {
+        document.getElementById("resultado").innerText = "Preencha todos os campos corretamente.";
+        return;
+      }
+
+      const volume = altura * largura * profundidade;
+      const preco = volume * valor;
+
+      document.getElementById("resultado").innerText =
+        `Volume: ${volume.toFixed(2)} m³\nValor estimado: R$ ${preco.toFixed(2)}`;
+    }
+
+    // Iniciar na aba "inicio"
+    window.onload = () => mostrarAba('inicio');
+  </script>
+</body>
+</html>
